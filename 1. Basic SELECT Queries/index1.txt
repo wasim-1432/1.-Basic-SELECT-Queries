@@ -1,0 +1,69 @@
+CREATE database company4;
+USE company4;
+
+CREATE TABLE employee(
+			employee_id INT PRIMARY KEY,
+            first_name VARCHAR(50),
+            last_name VARCHAR(50),
+            department_id INT,
+            salary DECIMAL(10,2)
+);
+
+DROP TABLE employee;
+
+INSERT INTO employee(employee_id,first_name,last_name,department_id,salary)
+VALUES
+(101, 'Amit', 'Kumar', 10, 55000),
+(102, 'Ankit', 'Sharma', 20, 45000),
+(103, 'Rohan', 'Verma', 10, 75000),
+(104, 'Arjun', 'Singh', 30, 65000),
+(105, 'Karan', 'Yadav', 20, 35000),
+(106, 'Rahul', 'Khan', 30, 90000),
+(107, 'Neha', 'Gupta', 10, 50000),
+(108, 'Aman', 'Ali', 20, 80000);
+
+{1. Display all records from employees.}
+SELECT * FROM employee;
+
+{2. Display only first_name and last_name.}
+SELECT first_name, last_name FROM employee;
+
+{3. Display unique department_id values.}
+SELECT DISTINCT department_id from employee;
+
+{4. Find employees whose salary is greater than 50,000.}
+SELECT * FROM employee
+WHERE salary>50000;
+
+{5. Find employees whose salary is between 30,000 and 70,000.}
+SELECT * FROM employee
+WHERE salary>30000 AND salary<70000;
+
+{6. Find employees whose first_name starts with 'A'.}
+SELECT * FROM employee
+WHERE first_name LIKE 'A%';
+
+{7. Find employees whose first_name ends with 'n'.}
+SELECT * FROM employee
+WHERE first_name LIKE '%n';
+
+{8. Find employees whose name contains 'an'.}
+SELECT * FROM employee
+WHERE first_name LIKE '%an%';
+
+{9. Find employees whose department_id is 10, 20 or 30.}
+SELECT * FROM employee
+WHERE department_id IN (10,20,30);
+
+{10. Display employees in descending order of salary.}
+SELECT * FROM employee
+ORDER BY salary DESC;
+
+{11. Display the top 5 highest-paid employees.}
+SELECT * FROM employee
+ORDER BY salary DESC
+LIMIT 5;
+
+{12. Display employees ordered by department_id and salary descending.}
+SELECT * FROM employee
+ORDER BY department_id ASC, salary DESC;
