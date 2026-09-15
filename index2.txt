@@ -1,0 +1,82 @@
+CREATE DATABASE company12;
+
+USE company12;
+
+CREATE TABLE employee(
+			employee_id INT PRIMARY KEY,
+            first_name VARCHAR(50),
+            last_name VARCHAR(50),
+            department_id INT,
+            salary decimal(10,2),
+            hire_date DATE
+);
+
+INSERT INTO employee(employee_id, first_name, last_name, department_id, salary, hire_date)
+VALUES
+(101, 'Rahul', 'Sharma', 1, 55000, '2024-03-15'),
+(102, 'Amit', 'Verma', 2, 45000, '2024-07-20'),
+(103, 'Priya', 'Singh', 3, 60000, '2024-11-10'),
+
+(104, 'Neha', 'Gupta', 1, 52000, '2025-01-05'),
+(105, 'Rohit', 'Yadav', 4, 48000, '2025-02-15'),
+(106, 'Pooja', 'Kumar', 5, 42000, '2025-04-21'),
+(107, 'Vikas', 'Mishra', 2, 47000, '2025-06-14'),
+(108, 'Anjali', 'Jain', 3, 58000, '2025-08-03'),
+(109, 'Saurabh', 'Tiwari', 1, 62000, '2025-10-18'),
+(110, 'Kavita', 'Shah', 4, 50000, '2025-12-22'),
+
+(111, 'Arjun', 'Mehta', 1, 65000, '2026-01-10'),
+(112, 'Sneha', 'Patel', 2, 49000, '2026-02-14'),
+(113, 'Karan', 'Agarwal', 3, 61000, '2026-03-08'),
+(114, 'Riya', 'Malhotra', 4, 53000, '2026-04-25'),
+(115, 'Manish', 'Rana', 5, 44000, '2026-05-11'),
+(116, 'Simran', 'Kaur', 1, 68000, '2026-06-20'),
+(117, 'Deepak', 'Joshi', 2, 51000, '2026-07-04'),
+(118, 'Nisha', 'Saxena', 3, 59000, '2026-08-09'),
+(119, 'Varun', 'Bansal', 5, 46000, '2026-09-01'),
+(120, 'Komal', 'Saini', 4, 54000, '2026-09-14');
+
+
+SELECT * from employee;
+
+{1. Find employees hired after 1 January 2025.}
+SELECT * FROM employee
+WHERE hire_date>'2025-01-01';
+
+{2. Find employees hired between two dates.}
+SELECT * FROM employee
+WHERE hire_date>'2025-01-01' and hire_date>'2026-01-01';
+
+{3. Find employees hired in the current year.}
+SELECT * FROM employee
+WHERE YEAR(hire_date)=YEAR(curdate());
+
+{4. Find employees hired in the current month.}
+SELECT * FROM employee
+WHERE month(hire_date)=month(curdate());
+
+{5. Find employees hired in the last 30 days.}
+SELECT * FROM employee
+WHERE hire_date>=curdate()-INTERVAL 30 day;
+
+{6. Find the number of employees hired in each year.}
+SELECT YEAR(hire_date), COUNT(*) AS total_employee FROM employee
+GROUP BY YEAR(hire_date);
+
+{7. Find the latest hired employee.}
+SELECT * FROM employee
+ORDER BY hire_date DESC limit 1;
+
+{8. Find the second latest hired employee.}
+SELECT * FROM employee
+WHERE hire_date=(SELECT max(hire_date) FROM employee
+WHERE hire_date<(SELECT max(hire_date) FROM employee));
+
+{9. Find employees hired on weekends.}
+SELECT * FROM employee
+WHERE dayofweek(hire_date) IN (1,7);
+
+{10. Find department-wise latest hire date.}
+SELECT department_id, MAX(hire_date) AS laste_employee
+FROM employee
+GROUP BY department_id;
