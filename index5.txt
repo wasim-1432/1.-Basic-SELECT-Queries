@@ -1,0 +1,69 @@
+CREATE DATABASE company18;
+
+USE company18;
+
+CREATE TABLE employee(
+	employee_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    department_name VARCHAR(100),
+    salary DECIMAL(10,2),
+    city VARCHAR(50)
+);
+
+INSERT INTO employee
+(employee_id, first_name, last_name, email, department_name, salary, city)
+VALUES
+(101, 'Rahul', 'Sharma', 'rahul@gmail.com', 'IT', 75000, 'Delhi'),
+
+(102, 'Amit', 'Verma', 'amit@gmail.com', 'HR', 60000, 'Noida'),
+
+(103, 'Rahul', 'Sharma', 'rahul@gmail.com', 'IT', 75000, 'Delhi'),
+
+(104, 'Priya', 'Singh', 'priya@gmail.com', 'Finance', 80000, 'Delhi'),
+
+(105, 'Neha', 'Gupta', 'neha@gmail.com', 'IT', 70000, 'Noida'),
+
+(106, 'Amit', 'Verma', 'amit@gmail.com', 'HR', 60000, 'Noida'),
+
+(107, 'Rohit', 'Kumar', 'rohit@gmail.com', 'Sales', 55000, 'Ghaziabad'),
+
+(108, 'Priya', 'Singh', 'priya2@gmail.com', 'Finance', 80000, 'Delhi'),
+
+(109, 'Neha', 'Gupta', 'neha@gmail.com', 'IT', 70000, 'Noida'),
+
+(110, 'Vikas', 'Jain', 'vikas@gmail.com', 'IT', 65000, 'Delhi'),
+
+(111, 'Vikas', 'Jain', 'vikas2@gmail.com', 'IT', 65000, 'Delhi'),
+
+(112, 'Karan', 'Shah', 'karan@gmail.com', 'HR', 60000, 'Noida'),
+
+(113, 'Karan', 'Shah', 'karan2@gmail.com', 'HR', 60000, 'Noida'),
+
+(114, 'Sneha', 'Patel', 'sneha@gmail.com', 'Sales', 50000, 'Delhi');
+
+SELECT * FROM employee;
+
+{1. Find duplicate email addresses.}
+SELECT email, COUNT(*) AS duplicate_email_count
+FROM employee
+GROUP BY email HAVING COUNT(*)>1;
+
+{2. Find duplicate employee names.}
+SELECT CONCAT(first_name,' ',last_name), COUNT(*) AS duplicate_name_count
+FROM employee
+GROUP BY CONCAT(first_name,' ',last_name) HAVING COUNT(*)>1;
+
+{3. Find departments having duplicate names}
+SELECT department_name, COUNT(*) AS duplicate_name
+FROM employee
+GROUP BY department_name HAVING COUNT(*)>1;
+
+{6. Find records that occur more than once.}
+SELECT CONCAT(first_name,' ',last_name) AS duplicate_name, COUNT(*) AS duplicate_count from employee
+GROUP BY first_name,last_name HAVING COUNT(*)>1;
+
+{7. Find unique records only.}
+SELECT CONCAT(first_name,' ',last_name) AS duplicate_name, COUNT(*) AS duplicate_count from employee
+GROUP BY first_name,last_name HAVING COUNT(*)=1;
