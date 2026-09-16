@@ -1,0 +1,86 @@
+CREATE database company14;
+
+USE company14;
+
+CREATE TABLE employee(
+				employee_id INT PRIMARY KEY,
+                first_name VARCHAR(50),
+                last_name VARCHAR(50),
+                department_id INT,
+                salary DECIMAL(10,2),
+                hire_date DATE
+);
+
+DROP table employee;
+
+INSERT INTO employee(employee_id, first_name, last_name, department_id, salary, hire_date)
+VALUES
+(101, 'Rahul', 'Sharma', 1, 55000, '2024-03-15'),
+(102, 'Amit', 'Verma', 2, 45000, '2024-07-20'),
+(103, 'Priya', 'Singh', 3, 60000, '2024-11-10'),
+(104, 'Neha', 'Gupta', 1, 52000, '2025-01-05'),
+(105, 'Rohit', 'Yadav', 4, 48000, '2025-02-15'),
+(106, 'Pooja', 'Kumar', 5, 42000, '2025-04-21'),
+(107, 'Vikas', 'Mishra', 2, 47000, '2025-06-14'),
+(108, 'Anjali', 'Jain', 3, 58000, '2025-08-03'),
+(109, 'Saurabh', 'Tiwari', 1, 62000, '2025-10-18'),
+(110, 'Kavita', 'Shah', 4, 50000, '2025-12-22'),
+
+(111, 'Arjun', 'Mehta', 1, 65000, '2026-01-10'),
+(112, 'Sneha', 'Patel', 2, 49000, '2026-02-14'),
+(113, 'Karan', 'Agarwal', 3, 61000, '2026-03-08'),
+(114, 'Riya', 'Malhotra', 4, 53000, '2026-04-25'),
+(115, 'Manish', 'Rana', 5, 44000, '2026-05-11'),
+(116, 'Simran', 'Kaur', 1, 68000, '2026-06-20'),
+(117, 'Deepak', 'Joshi', 2, 51000, '2026-07-04'),
+(118, 'Nisha', 'Saxena', 3, 59000, '2026-08-09'),
+
+-- Duplicate full name
+(119, 'Rahul', 'Sharma', 5, 46000, '2026-09-01'),
+
+-- Leading/trailing spaces ke liye
+(120, '  Amit  ', 'Khan', 4, 54000, '2026-09-14');
+
+SELECT * FROM employee;
+
+{1. Convert first_name to uppercase.}
+SELECT employee_id, UPPER(first_name), last_name, department_id, salary, hire_date
+FROM employee;
+
+{2. Convert first_name to lowercase.}
+SELECT employee_id, LOWER(first_name), last_name, department_id, salary, hire_date
+FROM employee;
+
+{3. Find the length of each employee name.}
+SELECT CONCAT(first_name,' ',last_name) AS full_name, LENGTH(full_name) AS full_name_length
+FROM employee;
+
+{4. Display first_name and last_name as one full_name.}
+SELECT first_name,last_name, concat(first_name,' ',last_name) AS full_name
+FROM employee;
+
+5. Find employees whose name length is greater than 5.
+SELECT * from employee
+WHERE LENGTH(first_name)>5;
+
+{6. Find the first 3 characters of each name.}
+SELECT first_name, SUBSTRING(TRIM(first_name),1,3) AS three_character
+FROM employee;
+
+{7. Remove leading/trailing spaces from a name.}
+SELECT first_name, TRIM(first_name) AS remove_spaces
+FROM employee;
+
+{8. Replace a specific character in employee names.}
+SELECT first_name, REPLACE(first_name,'e','aa')
+FROM employee;
+
+{9. Count employees whose names start with 'A'.}
+SELECT COUNT(*) AS employee_count_whose_name_start_A
+FROM employee 
+WHERE first_name LIKE 'A%';
+
+{10. Find duplicate full names.}
+SELECT concat(first_name,' ',last_name), COUNT(*) AS duplacate_name
+FROM employee
+GROUP BY concat(first_name,' ',last_name) HAVING COUNT(*)>1;
